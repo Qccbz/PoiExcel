@@ -39,10 +39,8 @@ public class FilesSheetMerge {
 		@Override
 		public void run() {
 			try {
-				//MergeExcel2.merge(srcDir, desFilePath);
-				MergeExcel3.merge(srcDir, desFilePath);
-				 //MergeExcelXSSF.merge(srcDir, desFilePath);
-				// MergeExcelHSSF.merge(srcDir, desFilePath);
+				//MergeTest1.merge(srcDir, desFilePath);
+				MergeTest2.merge(srcDir, desFilePath);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

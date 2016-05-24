@@ -19,7 +19,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import utils.QSort;
 import utils.QString;
 
-public class MergeExcel3 {
+public class MergeTest2 {
 
 	public static void merge(String srcDir, String desFilePath) throws IOException {
 		if (!QString.isBlank(srcDir) && !QString.isBlank(desFilePath)) {

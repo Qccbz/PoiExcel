@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -17,7 +16,7 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 import utils.QSort;
 import utils.QString;
 
-public class MergeExcel2 {
+public class MergeTest1 {
 
 	public static void merge(String srcDir, String desFilePath) throws IOException {
 		if (!QString.isBlank(srcDir) && !QString.isBlank(desFilePath)) {
