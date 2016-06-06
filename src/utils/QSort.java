@@ -45,12 +45,12 @@ public class QSort {
 	private static int partitionFileSize(File[] arr, int left, int right) {
 		int i = left, j = right;
 		File tmp;
-		long pivot = arr[(left + right) / 2].getTotalSpace();
+		long pivot = arr[(left + right) / 2].length();
 
 		while (i <= j) {
-			while (arr[i].getTotalSpace() < pivot)
+			while (arr[i].length() < pivot)
 				i++;
-			while (arr[j].getTotalSpace() > pivot)
+			while (arr[j].length() > pivot)
 				j--;
 			if (i <= j) {
 				tmp = arr[i];

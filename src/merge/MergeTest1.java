@@ -31,7 +31,7 @@ public class MergeTest1 {
 				File[] fileList = dir.listFiles();
 				int fileNumber = fileList == null ? 0 : fileList.length;
 				if (fileNumber > 0) {
-					QSort.sortByLastModified(fileList);
+					QSort.sortByFileSize(fileList);
 					List<FileInputStream> inputStreamList = new ArrayList<>(fileNumber);
 					for (int i = 0; i < fileNumber; i++) {
 						inputStreamList.add(new FileInputStream(fileList[i]));

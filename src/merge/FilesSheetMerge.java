@@ -4,17 +4,17 @@ import java.io.File;
 
 public class FilesSheetMerge {
 
-//	public static final String srcDir = new StringBuilder("E:").append(File.separator).append("poiExcel")
-//			.append(File.separator).append("4月各校区工资素材").toString();
-//
-//	public static final String desFilePath = new StringBuilder("E:").append(File.separator).append("poiExcel")
-//			.append(File.separator).append("Merge_4月各校区工资素材.xls").toString();
-
 	public static final String srcDir = new StringBuilder("E:").append(File.separator).append("poiExcel")
-			.append(File.separator).append("教师学管师咨询师月任务提报").toString();
+			.append(File.separator).append("5月各校区工资素材").toString();
 
 	public static final String desFilePath = new StringBuilder("E:").append(File.separator).append("poiExcel")
-			.append(File.separator).append("Merge_教师学管师咨询师月任务提报.xls").toString();
+			.append(File.separator).append("Merge_5月各校区工资素材.xls").toString();
+
+//	public static final String srcDir = new StringBuilder("E:").append(File.separator).append("poiExcel")
+//			.append(File.separator).append("教师学管师咨询师月任务提报").toString();
+//
+//	public static final String desFilePath = new StringBuilder("E:").append(File.separator).append("poiExcel")
+//			.append(File.separator).append("Merge_教师学管师咨询师月任务提报.xls").toString();
 
 	public static void main(String[] args) {
 		FilesSheetMerge instance = new FilesSheetMerge();
@@ -39,8 +39,8 @@ public class FilesSheetMerge {
 		@Override
 		public void run() {
 			try {
-				//MergeTest1.merge(srcDir, desFilePath);
-				MergeTest2.merge(srcDir, desFilePath);
+				MergeTest1.merge(srcDir, desFilePath);
+				//MergeTest2.merge(srcDir, desFilePath);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
