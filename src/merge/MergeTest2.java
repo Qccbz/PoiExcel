@@ -34,7 +34,7 @@ public class MergeTest2 {
 				File[] fileList = dir.listFiles();
 				int fileNumber = fileList == null ? 0 : fileList.length;
 				if (fileNumber > 0) {
-					QSort.sortByLastModified(fileList);
+					QSort.sortByFileSize(fileList);
 					List<File> inputList = new ArrayList<>(fileNumber);
 					for (int i = 0; i < fileNumber; i++) {
 						inputList.add(fileList[i]);
@@ -56,6 +56,7 @@ public class MergeTest2 {
 					int sheetNumber = first.getNumberOfSheets();
 					Workbook curBook;
 					for (int i = 1; i < streamSize; i++) {
+						System.out.println(i);
 						curBook = getWorkBook(list.get(i));
 						if (curBook != null) {
 							for (int j = 0; j < sheetNumber; j++) {
@@ -95,7 +96,7 @@ public class MergeTest2 {
 		return null;
 	}
 
-	private static final String[] filterKeyWords = { "校区", "学科组", "学管师姓名", "咨询师姓名", "合计", "总计" };
+	private static final String[] filterKeyWords = { "校区", "学科组", "学管师姓名", "咨询师姓名", "合计", "统计", "总计" };
 
 	private static boolean isKeyWordRow(Row srcRow) {
 		for (int index = 0; index < 2; index++) {
@@ -176,7 +177,8 @@ public class MergeTest2 {
 						}
 
 						if (srcCell != null && srcCell.getCellType() == Cell.CELL_TYPE_STRING
-								&& srcCell.getStringCellValue().equals("合计")) {
+								&& (srcCell.getStringCellValue().equals("合计")
+										|| srcCell.getStringCellValue().equals("总合计"))) {
 							destSheet.removeRow(destSheet.getRow(destLen + newRowIndex--));
 							break;
 						}
@@ -214,55 +216,67 @@ public class MergeTest2 {
 			for (int j = srcSheet.getFirstRowNum(); j <= srcLen; j++) {
 
 				Row srcRow = srcSheet.getRow(j);
-				int srcRowCellNumber = srcRow == null ? 0 : srcRow.getPhysicalNumberOfCells();
+				if (!isUsefulRow(srcRow)) {
+					continue;
+				}
+				if (isKeyWordRow(srcRow)) {
+					continue;
+				}
 
-				if (srcRowCellNumber > 0) {
-					if (srcRowCellNumber >= 2) {
-						if (srcRow.getCell(0, Row.RETURN_BLANK_AS_NULL) == null
-								|| srcRow.getCell(1, Row.RETURN_BLANK_AS_NULL) == null) {
-							continue;
-						}
-						if (isKeyWordRow(srcRow)) {
-							continue;
-						}
-					} else if (srcRowCellNumber <= 1) {
-						continue;
-					}
+				Row destRow = destSheet.createRow(destLen + ++newRowIndex);
+				for (int k = srcRow.getFirstCellNum(); k < srcRow.getLastCellNum(); k++) {
+					Cell srcCell = srcRow.getCell(k);
+					Cell destCell = destRow.createCell(k);
 
-					Row destRow = destSheet.createRow(destLen + ++newRowIndex);
-					for (int k = srcRow.getFirstCellNum(); k < srcRow.getLastCellNum(); k++) {
-						Cell srcCell = srcRow.getCell(k);
-						Cell destCell = destRow.createCell(k);
-
-						if (srcCell != null && destCell != null) {
-							switch (srcCell.getCellType()) {
-							case Cell.CELL_TYPE_FORMULA:
-								destCell.setCellFormula(srcCell.getCellFormula());
-								break;
-							case Cell.CELL_TYPE_NUMERIC:
-								destCell.setCellValue(srcCell.getNumericCellValue());
-								break;
-							case Cell.CELL_TYPE_STRING:
-								destCell.setCellValue(srcCell.getStringCellValue());
-								break;
-							case Cell.CELL_TYPE_BLANK:
-								destCell.setCellType(Cell.CELL_TYPE_BLANK);
-								break;
-							case Cell.CELL_TYPE_BOOLEAN:
-								destCell.setCellValue(srcCell.getBooleanCellValue());
-								break;
-							case Cell.CELL_TYPE_ERROR:
-								destCell.setCellErrorValue(srcCell.getErrorCellValue());
-								break;
-							default:
-								destCell.setCellValue(srcCell.getStringCellValue());
-								break;
-							}
+					if (srcCell != null && destCell != null) {
+						switch (srcCell.getCellType()) {
+						case Cell.CELL_TYPE_FORMULA:
+							destCell.setCellFormula(srcCell.getCellFormula());
+							break;
+						case Cell.CELL_TYPE_NUMERIC:
+							destCell.setCellValue(srcCell.getNumericCellValue());
+							break;
+						case Cell.CELL_TYPE_STRING:
+							destCell.setCellValue(srcCell.getStringCellValue());
+							break;
+						case Cell.CELL_TYPE_BLANK:
+							destCell.setCellType(Cell.CELL_TYPE_BLANK);
+							break;
+						case Cell.CELL_TYPE_BOOLEAN:
+							destCell.setCellValue(srcCell.getBooleanCellValue());
+							break;
+						case Cell.CELL_TYPE_ERROR:
+							destCell.setCellErrorValue(srcCell.getErrorCellValue());
+							break;
+						default:
+							destCell.setCellValue(srcCell.getStringCellValue());
+							break;
 						}
 					}
 				}
 			}
 		}
-
 	}
+
+	private static boolean isUsefulRow(Row srcRow) {
+		int cellNumber = srcRow == null ? 0 : srcRow.getPhysicalNumberOfCells();
+		if (cellNumber >= 2) {
+			if (srcRow.getCell(0, Row.RETURN_BLANK_AS_NULL) == null
+					|| srcRow.getCell(1, Row.RETURN_BLANK_AS_NULL) == null) {
+				if (cellNumber > 2) {
+					for (int index = 2; index < cellNumber; index++) {
+						Cell c = srcRow.getCell(index, Row.RETURN_BLANK_AS_NULL);
+						if (c != null) {
+							return true;
+						}
+					}
+				}
+				return false;
+			}
+		} else if (cellNumber <= 1) {
+			return false;
+		}
+		return true;
+	}
+
 }

@@ -17,7 +17,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import utils.QString;
 
-public class MergeHSSF {
+public class DemoHSSF {
 
 	public static void merge(String srcDir, String desFilePath) throws IOException {
 		if (!QString.isBlank(srcDir) && !QString.isBlank(desFilePath)) {
