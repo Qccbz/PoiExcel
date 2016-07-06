@@ -96,7 +96,7 @@ public class MergeTest2 {
 		return null;
 	}
 
-	private static final String[] filterKeyWords = { "Ğ£Çø", "Ñ§¿Æ×é", "Ñ§¹ÜÊ¦ĞÕÃû", "×ÉÑ¯Ê¦ĞÕÃû", "ºÏ¼Æ", "Í³¼Æ", "×Ü¼Æ" };
+	private static final String[] filterKeyWords = { "æ ¡åŒº", "å­¦ç§‘ç»„", "å­¦ç®¡å¸ˆå§“å", "å’¨è¯¢å¸ˆå§“å", "åˆè®¡", "ç»Ÿè®¡", "æ€»è®¡" };
 
 	private static boolean isKeyWordRow(Row srcRow) {
 		for (int index = 0; index < 2; index++) {
@@ -177,8 +177,8 @@ public class MergeTest2 {
 						}
 
 						if (srcCell != null && srcCell.getCellType() == Cell.CELL_TYPE_STRING
-								&& (srcCell.getStringCellValue().equals("ºÏ¼Æ")
-										|| srcCell.getStringCellValue().equals("×ÜºÏ¼Æ"))) {
+								&& (srcCell.getStringCellValue().equals("åˆè®¡")
+										|| srcCell.getStringCellValue().equals("æ€»åˆè®¡"))) {
 							destSheet.removeRow(destSheet.getRow(destLen + newRowIndex--));
 							break;
 						}

@@ -74,7 +74,7 @@ public class MergeTest1 {
 		}
 	}
 
-	private static final String[] filterKeyWords = { "ĞòºÅ", "Ğ£Çø", "ĞÕÃû" };
+	private static final String[] filterKeyWords = { "åºå·", "æ ¡åŒº", "å§“å" };
 
 	private static boolean isKeyWordRow(Row srcRow) {
 		for (int index = 0; index < 2; index++) {
@@ -100,7 +100,7 @@ public class MergeTest1 {
 		if (c != null && c.getCellType() == Cell.CELL_TYPE_STRING) {
 			String text = c.getRichStringCellValue().getString();
 			if (!QString.isBlank(text)) {
-				if (text.trim().equals("Ñ§ÉúĞÕÃû")) {
+				if (text.trim().equals("å­¦ç”Ÿå§“å")) {
 					return true;
 				}
 			}
@@ -123,7 +123,7 @@ public class MergeTest1 {
 			if (srcRowCellNumber > 0) {
 				if (srcRowCellNumber >= 2) {
 					if (sheetIndex == 5) {
-						if (j == 0 || j == 1) {// ×ÉÑ¯µ¥±Êtitle
+						if (j == 0 || j == 1) {// å’¨è¯¢å•ç¬”title
 							continue;
 						} else {
 							if (srcRow.getCell(0, Row.RETURN_BLANK_AS_NULL) == null
@@ -143,7 +143,7 @@ public class MergeTest1 {
 							continue;
 						}
 					}
-					if (sheetIndex == 2) {// Ñ§¹ÜÊ¦Ğø·Ñ¼°×ª½éÉÜ
+					if (sheetIndex == 2) {// å­¦ç®¡å¸ˆç»­è´¹åŠè½¬ä»‹ç»
 						if (isStudentRow(srcRow)) {
 							break;
 						}

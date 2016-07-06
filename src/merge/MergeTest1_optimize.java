@@ -47,20 +47,26 @@ public class MergeTest1_optimize {
 				srcBook = WorkbookFactory.create(new FileInputStream(fileList[i]));
 				String srcBookName = fileList[i].getName();
 				int srcSheetNum = srcBook.getNumberOfSheets();
-				if (Math.abs(destSheetNum - srcSheetNum) <= 2) {// ‘ –Ì∫œ≤¢µƒWorkBook¥Ê‘⁄¡Ω∏ˆsheet±ÌŒÛ≤Ó
-					for (int j = 0; j < destSheetNum; j++) {// ’“µΩ∂‘”¶µƒsheet±Ì∫œ≤¢,sheet name∆•≈‰¥¶¿Ì
-
-						int srcSheetIndex = getSrcSheetIndex(srcBookName,srcBook, destBook.getSheetAt(j).getSheetName(), j);
-						if (srcSheetIndex != -1) {
-							addSheet(j, destBook.getSheetAt(j), srcBook.getSheetAt(srcSheetIndex));
+				if (Math.abs(destSheetNum - srcSheetNum) <= 2) {// ÂÖÅËÆ∏ÂêàÂπ∂ÁöÑWorkBookÂ≠òÂú®‰∏§‰∏™sheetË°®ËØØÂ∑Æ
+					for (int j = 0; j < srcSheetNum; j++) {// ÊâæÂà∞ÂØπÂ∫îÁöÑsheetË°®ÂêàÂπ∂,sheet nameÂåπÈÖçÂ§ÑÁêÜ
+						int destSheetIndex = getDestSheetIndex(srcBookName, srcBook, destBook, j);
+						if (destSheetIndex != -1) {
+							addSheet(destSheetIndex, destBook.getSheetAt(destSheetIndex), srcBook.getSheetAt(j));
 						}
 					}
 					srcBook.close();
 					srcBook = null;
 				} else {
-					// ¥¶¿Ì≤ª∑˚∫œ“™«ÛµƒExcelŒƒº˛
-					System.out.println("---fail---" + fileList[i].getName() + ",path:" + fileList[i].getAbsolutePath());
-
+					// Â§ÑÁêÜ‰∏çÁ¨¶ÂêàË¶ÅÊ±ÇÁöÑExcelÊñá‰ª∂
+					System.out.println("------------------"+srcBookName+" ÁöÑsheetÊï∞ÁõÆ‰∏édestWorkBookÁõ∏Â∑ÆÂ§ß‰∫é2------------------");
+					for (int j = 0; j < srcSheetNum; j++) {// ÊâæÂà∞ÂØπÂ∫îÁöÑsheetË°®ÂêàÂπ∂,sheet nameÂåπÈÖçÂ§ÑÁêÜ
+						int destSheetIndex = getDestSheetIndex(srcBookName, srcBook, destBook, j);
+						if (destSheetIndex != -1) {
+							addSheet(destSheetIndex, destBook.getSheetAt(destSheetIndex), srcBook.getSheetAt(j));
+						}
+					}
+					srcBook.close();
+					srcBook = null;
 				}
 			}
 		} catch (Exception e) {
@@ -77,35 +83,54 @@ public class MergeTest1_optimize {
 		}
 	}
 
-	private static int getSrcSheetIndex(String srcBookName, Workbook srcBook, String matchSheetName, int destIndex) {
+	private static int getDestSheetIndex(String srcBookName, Workbook srcBook, Workbook destBook, int srcIndex) {
 
-		if (matchSheetName.equals(srcBook.getSheetAt(destIndex).getSheetName())) {
-			return destIndex;
+		String matchedName = srcBook.getSheetAt(srcIndex).getSheetName();
+		if (srcIndex < destBook.getNumberOfSheets()) {
+			if (destBook.getSheetAt(srcIndex).getSheetName().equals(matchedName)) {
+				return srcIndex;
+			}
 		}
 
-		System.out.println("---match---" + srcBookName + "---" + srcBook.getSheetAt(destIndex).getSheetName());
-		// ≤È’“œ‡À∆∂»◊Ó∏ﬂµƒsheet index
+		// Êü•ÊâæÁõ∏‰ººÂ∫¶ÊúÄÈ´òÁöÑsheet index
 		double maxSimilarity = 0.0;
 		int matchedIndex = -1;
-		int srcSheetNum = srcBook.getNumberOfSheets();
-		for (int i = 0; i < srcSheetNum; i++) {
+		int destSheetNum = destBook.getNumberOfSheets();
+		String destMatchedName = "";
 
-			double curSimilarity = QString.similarity(matchSheetName, srcBook.getSheetAt(i).getSheetName());
+		for (int i = 0; i < destSheetNum; i++) {
+			double curSimilarity = QString.similarity(matchedName, destBook.getSheetAt(i).getSheetName());
 
 			if (maxSimilarity < curSimilarity) {
 				maxSimilarity = curSimilarity;
 				matchedIndex = i;
+				destMatchedName = destBook.getSheetAt(i).getSheetName();
 			}
 
-			if (i == srcSheetNum - 1) {
-				System.out.println("---match result---" + srcBook.getSheetAt(matchedIndex).getSheetName()
-						+ "---similarity:" + maxSimilarity);
+			if (i == destSheetNum - 1) {
+				if (maxSimilarity <= 0.8) {
+					System.out.println(
+							"match fail:" + srcBookName + "->" + matchedName + ",max similarity:" + maxSimilarity);
+					return -1;
+				}
+				System.out.println("match success:" + srcBookName + "->" + matchedName + ",value:" + maxSimilarity
+						+ ",compare:" + destMatchedName);
 			}
 		}
 		return matchedIndex;
 	}
 
-	private static final String[] filterKeyWords = { "–Ú∫≈", "–£«¯", "–’√˚" };
+	private static final String[] filterKeyWords = { "Â∫èÂè∑", "Ê†°Âå∫", "ÂßìÂêç" };
+
+	private static boolean isBlankRow(Row srcRow) {
+		
+		Cell cell_0 = srcRow.getCell(0, Row.RETURN_BLANK_AS_NULL);
+		Cell cell_1 = srcRow.getCell(1, Row.RETURN_BLANK_AS_NULL);
+		if ((cell_0 == null && cell_1 == null) || (cell_0 != null && cell_1 == null)) {
+			return true;
+		}
+		return false;
+	}
 
 	private static boolean isKeyWordRow(Row srcRow) {
 		for (int index = 0; index < 2; index++) {
@@ -131,7 +156,7 @@ public class MergeTest1_optimize {
 		if (c != null && c.getCellType() == Cell.CELL_TYPE_STRING) {
 			String text = c.getRichStringCellValue().getString();
 			if (!QString.isBlank(text)) {
-				if (text.trim().equals("—ß…˙–’√˚")) {
+				if (text.trim().equals("Â≠¶ÁîüÂßìÂêç")) {
 					return true;
 				}
 			}
@@ -153,8 +178,8 @@ public class MergeTest1_optimize {
 
 			if (srcRowCellNumber > 0) {
 				if (srcRowCellNumber >= 2) {
-					if (sheetIndex == 5) {// ◊…—Øµ•± sheet
-						if (j == 0 || j == 1) {// ◊…—Øµ•± title
+					if (sheetIndex == 5) {// Âí®ËØ¢ÂçïÁ¨îsheet
+						if (j == 0 || j == 1) {// Âí®ËØ¢ÂçïÁ¨îtitle
 							continue;
 						} else {
 							if (srcRow.getCell(0, Row.RETURN_BLANK_AS_NULL) == null
@@ -164,8 +189,7 @@ public class MergeTest1_optimize {
 						}
 					} else {
 						// filter blank or invalid row
-						if (srcRow.getCell(0, Row.RETURN_BLANK_AS_NULL) == null
-								|| srcRow.getCell(1, Row.RETURN_BLANK_AS_NULL) == null) {
+						if (isBlankRow(srcRow)) {
 							continue;
 						}
 					}
@@ -175,7 +199,7 @@ public class MergeTest1_optimize {
 							continue;
 						}
 					}
-					if (sheetIndex == 2) {// —ßπ‹ ¶–¯∑—º∞◊™ΩÈ…‹
+					if (sheetIndex == 2) {// Â≠¶ÁÆ°Â∏àÁª≠Ë¥πÂèäËΩ¨‰ªãÁªç
 						if (isStudentRow(srcRow)) {
 							break;
 						}

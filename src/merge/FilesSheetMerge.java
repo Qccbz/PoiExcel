@@ -6,17 +6,17 @@ public class FilesSheetMerge {
 
 //////////////////////////*******MergeTest1************////////////////////////////////////////////////////////
 	public static final String srcDir = new StringBuilder("E:").append(File.separator).append("poiExcel")
-			.append(File.separator).append("5ÔÂ¸÷Ğ£Çø¹¤×ÊËØ²Ä").toString();
+			.append(File.separator).append("7æœˆå„æ ¡åŒºç´ æ").toString();
 
 	public static final String desFilePath = new StringBuilder("E:").append(File.separator).append("poiExcel")
-			.append(File.separator).append("Merge_5ÔÂ¸÷Ğ£Çø¹¤×ÊËØ²Ä.xls").toString();
+			.append(File.separator).append("Merge_7æœˆå„æ ¡åŒºç´ æ.xls").toString();
 
 //////////////////////////*******MergeTest2************////////////////////////////////////////////////////////	
 //	public static final String srcDir = new StringBuilder("E:").append(File.separator).append("poiExcel")
-//			.append(File.separator).append("½ÌÊ¦Ñ§¹ÜÊ¦×ÉÑ¯Ê¦ÔÂÈÎÎñÌá±¨2016Äê6ÔÂ").toString();
+//			.append(File.separator).append("æ•™å¸ˆå­¦ç®¡å¸ˆå’¨è¯¢å¸ˆæœˆä»»åŠ¡ææŠ¥2016å¹´6æœˆ").toString();
 //
 //	public static final String desFilePath = new StringBuilder("E:").append(File.separator).append("poiExcel")
-//			.append(File.separator).append("Merge_½ÌÊ¦Ñ§¹ÜÊ¦×ÉÑ¯Ê¦ÔÂÈÎÎñÌá±¨2016Äê6ÔÂ_new.xls").toString();
+//			.append(File.separator).append("Merge_æ•™å¸ˆå­¦ç®¡å¸ˆå’¨è¯¢å¸ˆæœˆä»»åŠ¡ææŠ¥2016å¹´6æœˆ_new.xls").toString();
 
 	public static void main(String[] args) {
 		FilesSheetMerge instance = new FilesSheetMerge();
