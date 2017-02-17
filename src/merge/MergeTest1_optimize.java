@@ -46,6 +46,7 @@ public class MergeTest1_optimize {
 			for (int i = fileList.length - 2; i >= 0; i--) {
 				srcBook = WorkbookFactory.create(new FileInputStream(fileList[i]));
 				String srcBookName = fileList[i].getName();
+				System.out.println((i + 1) + "--->" + srcBookName);
 				int srcSheetNum = srcBook.getNumberOfSheets();
 				if (Math.abs(destSheetNum - srcSheetNum) <= 2) {// 允许合并的WorkBook存在两个sheet表误差
 					for (int j = 0; j < srcSheetNum; j++) {// 找到对应的sheet表合并,sheet name匹配处理
@@ -108,7 +109,7 @@ public class MergeTest1_optimize {
 			}
 
 			if (i == destSheetNum - 1) {
-				if (maxSimilarity <= 0.8) {
+				if (maxSimilarity <= 0.5) {
 					System.out.println(
 							"match fail:" + srcBookName + "->" + matchedName + ",max similarity:" + maxSimilarity);
 					return -1;

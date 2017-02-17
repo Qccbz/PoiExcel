@@ -51,15 +51,16 @@ public class MergeTest2_optimize {
 		if (streamSize > 1) {
 			Workbook first = null;
 			try {
-				first = getWorkBook(list.get(0));
+				first = getWorkBook(list.get(streamSize - 1));
 				if (first != null) {
 					int sheetNumber = first.getNumberOfSheets();
 					Workbook curBook;
-					for (int i = 1; i < streamSize; i++) {
+					for (int i = streamSize - 2; i >= 0; i--) {
 						System.out.println(i);
 						curBook = getWorkBook(list.get(i));
 						if (curBook != null) {
-							for (int j = 0; j < sheetNumber; j++) {
+							int curBookSheetCount = curBook.getNumberOfSheets();
+							for (int j = 0; j < sheetNumber && j < curBookSheetCount; j++) {
 								addSheet(j, first.getSheetAt(j), curBook.getSheetAt(j));
 							}
 							curBook.close();
