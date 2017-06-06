@@ -19,7 +19,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import utils.QSort;
 import utils.QString;
 
-public class MergeTest2_optimize {
+public class MergeMonthDuty {
 
 	public static void merge(String srcDir, String desFilePath) throws IOException {
 		if (!QString.isBlank(srcDir) && !QString.isBlank(desFilePath)) {

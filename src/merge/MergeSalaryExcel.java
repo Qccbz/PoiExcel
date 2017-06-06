@@ -14,7 +14,7 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 import utils.QSort;
 import utils.QString;
 
-public class MergeTest1_optimize {
+public class MergeSalaryExcel {
 
 	public static void merge(String srcDir, String desFilePath) throws IOException {
 		if (!QString.isBlank(srcDir) && !QString.isBlank(desFilePath)) {

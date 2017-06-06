@@ -12,10 +12,10 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 import utils.QString;
 
-public class MergeOneExcel_AllSheets {
+public class MergeAllSheetsOneExcel {
 
 	public static final String srcFilePath = new StringBuilder("E:").append(File.separator).append("poiExcel")
-			.append(File.separator).append("各校区V课实到人数统计.xlsx").toString();
+			.append(File.separator).append("各校区PV班.xlsx").toString();
 
 	public static void merge() {
 		mergeExcelFiles(new File(srcFilePath));

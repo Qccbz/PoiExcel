@@ -5,18 +5,18 @@ import java.io.File;
 public class FilesSheetMerge {
 
 //////////////////////////*******MergeTest1************////////////////////////////////////////////////////////
-//	public static final String srcDir = new StringBuilder("E:").append(File.separator).append("poiExcel")
-//			.append(File.separator).append("1月各校区工资素材").toString();
-//
-//	public static final String desFilePath = new StringBuilder("E:").append(File.separator).append("poiExcel")
-//			.append(File.separator).append("Merge_1月各校区工资素材.xls").toString();
-
-//////////////////////////*******MergeTest2************////////////////////////////////////////////////////////	
 	public static final String srcDir = new StringBuilder("E:").append(File.separator).append("poiExcel")
-			.append(File.separator).append("2017年2月教师月任务分解").toString();
+			.append(File.separator).append("5月工资素材").toString();
 
 	public static final String desFilePath = new StringBuilder("E:").append(File.separator).append("poiExcel")
-			.append(File.separator).append("Merge_2017年2月教师月任务分解.xls").toString();
+			.append(File.separator).append("Merge_5月工资素材.xls").toString();
+
+//////////////////////////*******MergeTest2************////////////////////////////////////////////////////////	
+//	public static final String srcDir = new StringBuilder("E:").append(File.separator).append("poiExcel")
+//			.append(File.separator).append("2017年5月教师月任务分解").toString();
+//
+//	public static final String desFilePath = new StringBuilder("E:").append(File.separator).append("poiExcel")
+//			.append(File.separator).append("Merge_2017年5月教师月任务分解.xls").toString();
 
 	public static void main(String[] args) {
 		FilesSheetMerge instance = new FilesSheetMerge();
@@ -41,13 +41,10 @@ public class FilesSheetMerge {
 		@Override
 		public void run() {
 			try {
-				//MergeTest1.merge(srcDir, desFilePath);
-				//MergeTest1_optimize.merge(srcDir, desFilePath);
-				
-				//MergeTest2.merge(srcDir, desFilePath);
-				MergeTest2_optimize.merge(srcDir, desFilePath);
-				
-				//MergeOneExcel_AllSheets.merge();
+				// MergeSalaryExcel.merge(srcDir, desFilePath);
+				MergeSalaryExcel_PV.merge(srcDir, desFilePath);
+				// MergeMonthDuty.merge(srcDir, desFilePath);
+				// MergeAllSheetsOneExcel.merge();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
