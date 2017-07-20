@@ -100,7 +100,7 @@ public class MergeMonthDuty {
 	private static final String[] filterKeyWords = { "校区", "学科组", "学管师姓名", "咨询师姓名", "合计", "统计", "总计" };
 
 	private static boolean isKeyWordRow(Row srcRow) {
-		for (int index = 0; index < 2; index++) {
+		for (int index = 0; index < 3; index++) {
 			Cell c = srcRow.getCell(index, Row.RETURN_BLANK_AS_NULL);
 			if (c != null && c.getCellType() == Cell.CELL_TYPE_STRING) {
 				String text = c.getRichStringCellValue().getString();

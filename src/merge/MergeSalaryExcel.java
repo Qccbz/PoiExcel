@@ -179,7 +179,7 @@ public class MergeSalaryExcel {
 
 			if (srcRowCellNumber > 0) {
 				if (srcRowCellNumber >= 2) {
-					if (sheetIndex == 5) {// 咨询单笔sheet
+					if (sheetIndex == 4) {// 咨询单笔sheet
 						if (j == 0 || j == 1) {// 咨询单笔title
 							continue;
 						} else {
@@ -200,7 +200,7 @@ public class MergeSalaryExcel {
 							continue;
 						}
 					}
-					if (sheetIndex == 2) {// 学管师续费及转介绍
+					if (sheetIndex == 1) {// 学管师续费及转介绍
 						if (isStudentRow(srcRow)) {
 							break;
 						}
