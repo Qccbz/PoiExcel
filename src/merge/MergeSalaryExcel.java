@@ -184,7 +184,8 @@ public class MergeSalaryExcel {
 							continue;
 						} else {
 							if (srcRow.getCell(0, Row.RETURN_BLANK_AS_NULL) == null
-									&& srcRow.getCell(1, Row.RETURN_BLANK_AS_NULL) == null) {
+									&& srcRow.getCell(1, Row.RETURN_BLANK_AS_NULL) == null
+									&& srcRow.getCell(2, Row.RETURN_BLANK_AS_NULL) == null) {
 								continue;
 							}
 						}
